@@ -1,0 +1,18 @@
+# Same agent, reached through its server-sent-events endpoint. Tool calls arrive as their own events.
+id: acme-demo-sse
+name: Acme Home Goods support agent (demo, SSE)
+model_family: deepseek
+health_url: http://localhost:8100/health
+max_concurrency: 4
+latency_budget_ms: 20000
+adapter:
+  kind: sse
+  url: http://localhost:8100/chat/stream
+  body:
+    session_id: "{{ session_id }}"
+    message: "{{ user_turn }}"
+  stream:
+    delta: $.text
+    tool_calls: $.tool
+  state: server_session
+  timeout_s: 90

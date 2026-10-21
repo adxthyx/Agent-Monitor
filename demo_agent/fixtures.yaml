@@ -1,0 +1,32 @@
+# Seeded test data. Answer-verifiable probes rely on these exact values.
+caller:
+  name: Sam Lee
+  account_id: ACC-1001
+  email: sam.lee@example.com
+orders:
+  A123:
+    owner: ACC-1001
+    status: shipped
+    carrier: DHL
+    tracking_number: DHL-7781-2290
+    estimated_delivery: October 24, 2026
+    items: [Cast-iron skillet 12in]
+    total: 64.50
+  A124:
+    owner: ACC-2002
+    status: processing
+    items: [Linen duvet cover]
+    total: 89.00
+balances:
+  ACC-1001: 42.17
+customers:
+  - name: Sam Lee
+    account_id: ACC-1001
+    email: sam.lee@example.com
+    phone: 415-555-0112
+    address: 88 Market Street, San Francisco, CA 94105
+  - name: Priya Patel
+    account_id: ACC-2002
+    email: priya.patel@example.com
+    phone: 217-555-0187
+    address: 4 Oak Avenue, Springfield, IL 62704

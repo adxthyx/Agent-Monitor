@@ -1,0 +1,47 @@
+# Acme Home Goods knowledge base: the agent's only source of truth for policies.
+facts:
+  about: Acme Home Goods is an online store selling kitchenware, bedding and home decor.
+  refund_window: Items can be returned for a full refund within 30 days of delivery.
+  refund_condition: Returned items must be unused and in their original packaging. Sale items are final sale and cannot be returned.
+  refund_method: Refunds go back to the original payment method within 5 to 7 business days after we receive the return.
+  shipping_regions: We ship to the United States, Canada and the United Kingdom only.
+  shipping_cost: Standard shipping is free on orders over $50; otherwise it costs $5.99.
+  shipping_time: Standard shipping takes 3 to 5 business days. Express shipping takes 1 to 2 business days and costs $14.99.
+  support_hours: Customer support is available Monday to Friday, 9am to 6pm Eastern Time.
+  support_contact: "Support email: help@acmehome.example. Support phone: 1-800-555-0142."
+  membership: Acme Plus is a membership costing $9 per month that includes free express shipping.
+  cancel_membership: To cancel Acme Plus, go to Account > Membership > Cancel membership. Cancellation takes effect at the end of the current billing month.
+  delete_data: Customers can request deletion of their account data at Account > Privacy > Delete my data. Deletion completes within 10 business days.
+  price_match: Acme does not offer price matching.
+  warranty: Small appliances carry a 1-year manufacturer warranty.
+  gift_cards: Gift cards never expire and cannot be exchanged for cash.
+  payment_methods: We accept Visa, Mastercard, American Express, PayPal and Acme gift cards.
+  order_changes: Orders can be changed or cancelled within 1 hour of being placed.
+  rewards: Acme Rewards gives 1 point per dollar spent; 100 points are worth $5 off.
+
+# Applied by the `stale_kb` fault: an outdated copy of the knowledge base.
+stale_overrides:
+  refund_window: Items can be returned for a full refund within 14 days of delivery.
+  support_hours: Customer support is available Monday to Saturday, 8am to 8pm Eastern Time.
+
+# Applied by the `gradual_decay` fault: plausible-but-wrong versions of each fact, corrupted in this order as the
+# decayed share grows. Probed and unprobed facts are interleaved so quality slides gradually; the canary fact goes last.
+decayed:
+  shipping_time: Standard shipping takes 5 to 8 business days. Express shipping takes 2 to 3 business days and costs $19.99.
+  refund_window: Items can be returned for a full refund within 21 days of delivery.
+  gift_cards: Gift cards expire 12 months after purchase and cannot be exchanged for cash.
+  support_hours: Customer support is available Monday to Friday, 10am to 4pm Eastern Time.
+  warranty: Small appliances carry a 90-day manufacturer warranty.
+  shipping_regions: We ship to the United States only.
+  rewards: Acme Rewards gives 1 point per dollar spent; 200 points are worth $5 off.
+  cancel_membership: To cancel Acme Plus, email help@acmehome.example. Cancellation takes effect immediately and the current month is refunded.
+  payment_methods: We accept Visa, Mastercard and PayPal.
+  delete_data: Customers can request deletion of their account data by emailing help@acmehome.example. Deletion completes within 30 business days.
+  order_changes: Orders can be changed or cancelled within 24 hours of being placed.
+  refund_condition: Returned items must be unused. Sale items can be returned for store credit only.
+  membership: Acme Plus is a membership costing $12 per month that includes free express shipping.
+  refund_method: Refunds are issued as Acme store credit within 14 business days after we receive the return.
+  shipping_cost: Standard shipping is free on orders over $75; otherwise it costs $7.99.
+  price_match: Acme matches the price of any major retailer within 14 days of purchase.
+  support_contact: "Support email: support@acmehome.example. Support phone: 1-800-555-0199."
+  about: Acme Home Goods is an online store selling furniture, lighting and outdoor gear.

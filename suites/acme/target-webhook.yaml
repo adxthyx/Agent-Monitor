@@ -1,0 +1,20 @@
+# Same agent through its asynchronous endpoint: it answers 202, then POSTs the reply to the monitor's callback URL.
+id: acme-demo-webhook
+name: Acme Home Goods support agent (demo, webhook)
+model_family: deepseek
+health_url: http://localhost:8100/health
+max_concurrency: 4
+latency_budget_ms: 20000
+adapter:
+  kind: webhook
+  url: http://localhost:8100/chat/async
+  body:
+    session_id: "{{ session_id }}"
+    message: "{{ user_turn }}"
+    callback_url: "{{ callback_url }}"
+    correlation_id: "{{ correlation_id }}"
+  response:
+    reply: $.output.text
+    tool_calls: $.output.tools
+  state: server_session
+  timeout_s: 90

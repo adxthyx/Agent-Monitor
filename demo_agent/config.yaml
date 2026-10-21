@@ -1,0 +1,3 @@
+# Model backends. `primary` is normal operation; `swap` is used by the `model_swap` fault (a family outside the judge panel).
+primary: {base_url: https://api.deepseek.com, api_key_env: DEEPSEEK_API_KEY, model: deepseek-flash}
+swap: {base_url: https://api.tokenfactory.nebius.com/v1/, api_key_env: NEBIUS_API_KEY, model: moonshotai/Kimi-K2.6}

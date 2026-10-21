@@ -1,0 +1,36 @@
+# LLM roles ("slots") the monitor uses. Swapping a provider or model is a config change only.
+# Model IDs verified against each provider's /models endpoint on 2026-10-20; run `agentmon doctor` to re-check.
+
+providers:
+  deepseek:
+    base_url: https://api.deepseek.com
+    api_key_env: DEEPSEEK_API_KEY
+    # Time-of-use pricing: peak 01:00-04:00 and 06:00-10:00 UTC, Mon-Fri; off-peak (half price) otherwise.
+    # DeepSeek also bills Chinese public holidays as off-peak; holidays are not modelled, so those days log at peak.
+    peak: {hours_utc: [[1, 4], [6, 10]], weekdays: [0, 1, 2, 3, 4]}
+  nebius:
+    base_url: https://api.tokenfactory.nebius.com/v1/
+    api_key_env: NEBIUS_API_KEY
+    live_pricing: true  # per-model prices read from GET /models?verbose=true
+
+slots:
+  generator:
+    - {provider: deepseek, model: deepseek-v4-pro, family: deepseek}
+  simulator:
+    - {provider: deepseek, model: deepseek-flash, family: deepseek}
+  # Judge panel: different families. Any judge sharing a family with the target is skipped.
+  # Phase 1 uses only the first eligible entry; Phase 2 adds panel voting.
+  judge:
+    - {provider: nebius, model: Qwen/Qwen3-235B-A22B-Instruct-2507, family: qwen}
+    - {provider: nebius, model: openai/gpt-oss-120b, family: gpt-oss}
+    - {provider: nebius, model: zai-org/GLM-5.3, family: glm}
+  embeddings:
+    - {provider: nebius, model: Qwen/Qwen3-Embedding-8B, family: qwen}
+  # Llama Guard is not in this account's Nebius catalogue; the safety slot is unassigned for now.
+
+# USD per 1M tokens, for providers without live pricing. A model priced by neither is logged with tokens only (cost NULL).
+# DeepSeek: official pricing page https://api-docs.deepseek.com/quick_start/pricing (checked 2026-10-21); DeepSeek's
+# /models endpoint carries no prices. Top-level values are peak rates; `off_peak` applies outside the provider's window.
+pricing:
+  deepseek-flash: {input: 0.30, cached_input: 0.006, output: 1.20, off_peak: {input: 0.15, cached_input: 0.003, output: 0.60}}
+  deepseek-v4-pro: {input: 1.32, cached_input: 0.044, output: 3.96, off_peak: {input: 0.66, cached_input: 0.022, output: 1.98}}

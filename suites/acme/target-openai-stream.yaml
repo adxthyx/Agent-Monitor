@@ -1,0 +1,12 @@
+# Same agent as an OpenAI-compatible streaming endpoint: the sse preset's defaults, black box (no tool calls visible).
+id: acme-demo-openai-stream
+name: Acme Home Goods support agent (demo, OpenAI streaming)
+model_family: deepseek
+health_url: http://localhost:8100/health
+max_concurrency: 4
+latency_budget_ms: 20000
+adapter:
+  kind: sse
+  url: http://localhost:8100/v1/chat/completions
+  state: client_history
+  timeout_s: 90

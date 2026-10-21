@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: agentmon
+      POSTGRES_PASSWORD: agentmon
+      POSTGRES_DB: agentmon
+    ports:
+      - "5433:5432"
+    volumes:
+      - agentmon-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentmon"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  agentmon-db:

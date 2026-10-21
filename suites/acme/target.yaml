@@ -1,0 +1,17 @@
+id: acme-demo
+name: Acme Home Goods support agent (demo)
+model_family: deepseek
+health_url: http://localhost:8100/health
+max_concurrency: 4
+latency_budget_ms: 20000
+adapter:
+  kind: json_post
+  url: http://localhost:8100/chat
+  body:
+    session_id: "{{ session_id }}"
+    message: "{{ user_turn }}"
+  response:
+    reply: $.output.text
+    tool_calls: $.output.tools
+  state: server_session
+  timeout_s: 90

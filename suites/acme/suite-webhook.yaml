@@ -1,0 +1,6 @@
+id: acme-webhook
+target: target-webhook.yaml
+profile: profile.yaml
+probes: [probes.yaml]
+interval_minutes: 15
+runs_per_probe: 1

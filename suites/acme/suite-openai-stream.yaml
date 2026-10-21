@@ -1,0 +1,6 @@
+id: acme-openai-stream
+target: target-openai-stream.yaml
+profile: profile.yaml
+probes: [probes.yaml]
+interval_minutes: 15
+runs_per_probe: 1
